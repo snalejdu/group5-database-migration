@@ -42,7 +42,7 @@ return new class extends Migration
             $col->id();
             $col->string('c_code')->unique();
             $col->string('c_name');
-            $col->string('des');
+            $col->text('description');
             $col->integer('credit');
             $col->foreignId('teacher_id')->constrained()->onDelete('cascade');
             $col->timestamps();
@@ -53,7 +53,7 @@ return new class extends Migration
             $col->foreignId('course_id')->constrained()->onDelete('cascade');
             $col->foreignId('student_id')->constrained()->onDelete('cascade');
             $col->string('title');
-            $col->string('description');
+            $col->text('description');
             $col->date('due_date');
             $col->integer('max_score');
             $col->timestamps();
@@ -62,7 +62,6 @@ return new class extends Migration
 
 
     }
-
 
     public function down(): void
     {
