@@ -14,7 +14,7 @@ return new class extends Migration
             $col->string('fname');
             $col->string('lname');
             $col->enum('gender',['Boy','Girl']);
-            $col->string('email');
+            $col->string('email')->unique();
             $col->string('phone');
             $col->string('dept');
             $col->date('hire_date');
@@ -28,7 +28,7 @@ return new class extends Migration
             $col->string('lname');
             $col->enum('gender', ['Boy', 'Girl']);
             $col->date('birth_date');
-            $col->string('email');
+            $col->string('email')->unique();
             $col->string('phone');
             $col->string('address');
             $col->date('enrl_date');
@@ -40,7 +40,7 @@ return new class extends Migration
 
         Schema::create('courses', function(Blueprint $col){
             $col->id();
-            $col->string('c_code');
+            $col->string('c_code')->unique();
             $col->string('c_name');
             $col->string('des');
             $col->integer('credit');
