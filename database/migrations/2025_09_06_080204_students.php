@@ -66,9 +66,9 @@ return new class extends Migration
 
     public function down(): void
     {
-        Schema::dropIfExists('students');
-        Schema::dropIfExists('teachers');
-        Schema::dropIfExists('courses');
-        Schema::dropIfExists('assignments');
+      Schema::dropIfExists('assignments');
+      Schema::dropIfExists('courses');
+      Schema::dropIfExists('students');
+      Schema::dropIfExists('teachers');
     }
 };
