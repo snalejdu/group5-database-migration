@@ -16,11 +16,20 @@ class Student extends Model
 
     public function teacher()
     {
-        return $this->belongsTo(Teacher::class, 'teacher_id', 'id');
+        return $this->belongsTo(Teacher::class);
+    }
+
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'assignments')
+                    ->withPivot('title', 'description', 'due_date', 'max_score')
+                    ->withTimestamps();
     }
 
     public function assignments()
     {
-        return $this->hasMany(Assignment::class, 'student_id', 'id');
+        return $this->hasMany(Assignment::class);
     }
 }
+

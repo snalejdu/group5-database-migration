@@ -8,11 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
+
         Schema::create('teachers', function(Blueprint $col){
             $col->id();
             $col->string('fname');
             $col->string('lname');
-            $col->enum('gender',['Male','Female','Other']);
+            $col->enum('gender',['Boy','Girl']);
             $col->string('email')->unique();
             $col->string('phone');
             $col->string('dept');
@@ -20,19 +21,23 @@ return new class extends Migration
             $col->timestamps();
         });
 
+
         Schema::create('students', function(Blueprint $col){
             $col->id();
             $col->string('fname');
             $col->string('lname');
-            $col->enum('gender', ['Male', 'Female', 'Other']);
+            $col->enum('gender', ['Boy', 'Girl']);
             $col->date('birth_date');
             $col->string('email')->unique();
             $col->string('phone');
             $col->string('address');
             $col->date('enrl_date');
             $col->string('g_level');
+            $col->foreignId('teacher_id')->constrained()->onDelete('cascade');
             $col->timestamps();
+
         });
+
 
         Schema::create('courses', function(Blueprint $col){
             $col->id();
@@ -44,25 +49,28 @@ return new class extends Migration
             $col->timestamps();
         });
 
-        // Assignments act as the pivot between Students and Courses
         Schema::create('assignments', function(Blueprint $col){
             $col->id();
-            $col->foreignId('student_id')->constrained()->onDelete('cascade');
             $col->foreignId('course_id')->constrained()->onDelete('cascade');
-            // assignment details
+            $col->foreignId('student_id')->constrained()->onDelete('cascade');
             $col->string('title');
             $col->text('description');
             $col->date('due_date');
             $col->integer('max_score');
             $col->timestamps();
+
         });
+
+
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('assignments');
-        Schema::dropIfExists('courses');
-        Schema::dropIfExists('students');
-        Schema::dropIfExists('teachers');
+      Schema::dropIfExists('assignments');
+      Schema::dropIfExists('courses');
+      Schema::dropIfExists('students');
+      Schema::dropIfExists('teachers');
     }
 };
+
+
