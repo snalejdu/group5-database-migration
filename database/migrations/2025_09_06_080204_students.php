@@ -8,12 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-
-        Schema::create('teachers', function(Blueprint $col){
+        // Teachers Table
+        Schema::create('teachers', function (Blueprint $col) {
             $col->id();
             $col->string('fname');
             $col->string('lname');
-            $col->enum('gender',['Boy','Girl']);
+            $col->enum('gender', ['Boy', 'Girl']);
             $col->string('email')->unique();
             $col->string('phone');
             $col->string('dept');
@@ -21,8 +21,8 @@ return new class extends Migration
             $col->timestamps();
         });
 
-
-        Schema::create('students', function(Blueprint $col){
+        // Students Table
+        Schema::create('students', function (Blueprint $col) {
             $col->id();
             $col->string('fname');
             $col->string('lname');
@@ -33,13 +33,11 @@ return new class extends Migration
             $col->string('address');
             $col->date('enrl_date');
             $col->string('g_level');
-            $col->foreignId('teacher_id')->constrained()->onDelete('cascade');
             $col->timestamps();
-
         });
 
-
-        Schema::create('courses', function(Blueprint $col){
+        // Courses Table
+        Schema::create('courses', function (Blueprint $col) {
             $col->id();
             $col->string('c_code')->unique();
             $col->string('c_name');
@@ -49,28 +47,27 @@ return new class extends Migration
             $col->timestamps();
         });
 
-        Schema::create('assignments', function(Blueprint $col){
+
+        Schema::create('assignments', function (Blueprint $col) {
             $col->id();
+            $col->foreignId('teacher_id')->constrained()->onDelete('cascade');
             $col->foreignId('course_id')->constrained()->onDelete('cascade');
             $col->foreignId('student_id')->constrained()->onDelete('cascade');
             $col->string('title');
             $col->text('description');
             $col->date('due_date');
             $col->integer('max_score');
+            $col->integer('score')->nullable();
             $col->timestamps();
-
         });
-
-
     }
 
     public function down(): void
     {
-      Schema::dropIfExists('assignments');
-      Schema::dropIfExists('courses');
-      Schema::dropIfExists('students');
-      Schema::dropIfExists('teachers');
+        Schema::dropIfExists('assignments');
+        Schema::dropIfExists('courses');
+        Schema::dropIfExists('students');
+        Schema::dropIfExists('teachers');
     }
 };
-
 

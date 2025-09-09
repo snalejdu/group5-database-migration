@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,15 +10,23 @@ class Assignment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'course_id', 'student_id', 'title',
-        'description', 'due_date', 'max_score'
+        'teacher_id', 'course_id', 'student_id',
+        'title', 'description', 'due_date', 'max_score', 'score'
     ];
 
+    // Assignment belongs to a teacher
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
+
+    // Assignment belongs to a course
     public function course()
     {
         return $this->belongsTo(Course::class);
     }
 
+    // Assignment belongs to a student
     public function student()
     {
         return $this->belongsTo(Student::class);

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,20 +13,13 @@ class Course extends Model
         'c_code', 'c_name', 'description', 'credit', 'teacher_id'
     ];
 
+    // A course belongs to a teacher
     public function teacher()
     {
         return $this->belongsTo(Teacher::class);
     }
 
-    // Many-to-many with extra fields (pivot = assignments)
-    public function students()
-    {
-        return $this->belongsToMany(Student::class, 'assignments')
-                    ->withPivot('title', 'description', 'due_date', 'max_score')
-                    ->withTimestamps();
-    }
-
-    // Direct access to assignments
+    // A course has many assignments
     public function assignments()
     {
         return $this->hasMany(Assignment::class);

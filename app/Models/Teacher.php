@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -9,17 +10,18 @@ class Teacher extends Model
     use HasFactory;
 
     protected $fillable = [
-        'fname', 'lname', 'gender', 'email',
-        'phone', 'dept', 'hire_date'
+        'fname', 'lname', 'gender', 'email', 'phone', 'dept', 'hire_date'
     ];
 
-    public function students()
-    {
-        return $this->hasMany(Student::class, 'teacher_id', 'id');
-    }
-
+    // A teacher teaches many courses
     public function courses()
     {
-        return $this->hasMany(Course::class, 'teacher_id', 'id');
+        return $this->hasMany(Course::class);
+    }
+
+    // A teacher gives many assignments
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class);
     }
 }
